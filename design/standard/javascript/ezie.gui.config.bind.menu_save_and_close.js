@@ -1,7 +1,7 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Image Editor extension for eZ Publish
 // SOFTWARE RELEASE: 0.1 (preview only)
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -41,6 +41,8 @@ ezie.gui.config.bind.menu_save_and_close = function() {
 
     $.log('starting save + close');
 
+    ezie.gui.config.zoom().reset();
+
     ezie.ezconnect.connect.instance().action({
         'action': 'save_and_quit',
         'success': function(response) {
@@ -50,6 +52,9 @@ ezie.gui.config.bind.menu_save_and_close = function() {
 
             $('#ezieToolsWindow').find('.current').removeClass('current');
             $('#ezie_zoom').parent().addClass('current');
+
+            ezie.gui.eziegui.getInstance().desactivateUndo();
+            ezie.gui.eziegui.getInstance().desactivateRedo();
         },
         dataType: 'html'
     });

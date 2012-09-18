@@ -1,7 +1,7 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Image Editor extension for eZ Publish
 // SOFTWARE RELEASE: 0.1 (preview only)
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,7 +23,6 @@
 
 ezie.gui.tools_window = function() {
     var jWindow = null;
-    var initialized = false;
 
     // returns the jQuery Dom element corresponding to
     // the window
@@ -45,7 +44,7 @@ ezie.gui.tools_window = function() {
 
             if (config.shortcut) {
                 item.attr("title", item.attr("title") + " (" + config.shortcut + ")");
-                $(document).bind('keydown', config.shortcut, function (e) {
+                $(document).bind('keydown.ezie', config.shortcut, function (e) {
                     if (!ezie.gui.eziegui.getInstance().isFrozen()) {
                         config.click();
                         e.stopPropagation( );
@@ -71,11 +70,14 @@ ezie.gui.tools_window = function() {
 
     };
 
-    var init = function() {
-        setBinds();
-        jWindow = $("#ezieToolsWindow");
-        initialized = true;
-    };
+    var unsetBinds = function () {
+        $(document).unbind('keydown.ezie');
+        $.each(ezie.gui.config.bindings.tools_window, function() {
+            var config = this;
+            var item = $(config.selector);
+            item.unbind('click');
+        });
+    }
 
     var freeze = function() {
         $(".filters").add(".tools").freeze();
@@ -85,13 +87,13 @@ ezie.gui.tools_window = function() {
     }
 
     var hide = function () {
+        unsetBinds();
         jWindow.fadeOut('fast');
     };
 
     var show = function () {
-        if (!initialized) {
-            init();
-        }
+        setBinds();
+        jWindow = $("#ezieToolsWindow");
         jWindow.fadeIn('fast');
     }
 

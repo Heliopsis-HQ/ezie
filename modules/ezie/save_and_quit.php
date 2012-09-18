@@ -2,7 +2,7 @@
 /**
  * File containing the ezie no save & quit menu item handler
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
  * @version //autogentag//
  * @package ezie
@@ -23,7 +23,7 @@ $imageHandler->initializeFromFile( $prepare_action->getImagePath(), $imageHandle
 $imageHandler->store( $imageAttribute );
 
 // remove view cache if needed
-eZContentCacheManager::clearObjectViewCacheIfNeeded( $prepare_action->getImageHandler()->attribute( 'id' ) );
+eZContentCacheManager::clearObjectViewCacheIfNeeded( $imageAttribute->attribute( 'contentobject_id' ) );
 
 // delete all the images in working directory
 // delete working directory

@@ -1,7 +1,7 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Image Editor extension for eZ Publish
 // SOFTWARE RELEASE: 0.1 (preview only)
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -88,7 +88,7 @@ ezie.gui.config.bind.tool_select_remove = function (){
     }
 }
 
-ezie.gui.config.bind.tool_select_method = function() {
+ezie.gui.config.bind.tool_select_method = function( e ) {
 
     var selectMethod = $('#optsSelect input[type="radio"]:checked:first').val();
     var selectWidth = $('#optsSelect input[type="text"][name="selection_width"]:first').val();
@@ -119,11 +119,15 @@ ezie.gui.config.bind.tool_select_method = function() {
 
             settings.aspectRatio = selectWidth / selectHeight;
 
-            settings.setSelect[3] = settings.setSelect[3] * settings.aspectRatio;
+            settings.setSelect[4] = settings.setSelect[3] * settings.aspectRatio;
 
             break;
         case 'free':
             settings.aspectRatio = null;
+            if( e!=null && e.type=='keyup' ){
+            settings.setSelect[2] = selectWidth;
+            settings.setSelect[3] = selectHeight;
+            }
             $.log('on entre dans free');
             break;
     }

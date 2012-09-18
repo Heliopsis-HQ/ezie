@@ -2,7 +2,7 @@
 /**
  * File containing the eZAutoloadGenerator class.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
  * @version //autogentag//
  * @package kernel
@@ -64,7 +64,7 @@ class eZIEezcImageConverter
                 $executable = $imageINI->variable( 'ImageMagick', 'ExecutableMac' );
             else if ( eZSys::osType() == 'unix' && $imageINI->hasVariable( 'ImageMagick', 'ExecutableUnix' ) )
                 $executable = $imageINI->variable( 'ImageMagick', 'ExecutableUnix' );
-            if ( $imageINI->hasVariable( 'ImageMagick', 'ExecutablePath' ) )
+            if ( $imageINI->hasVariable( 'ImageMagick', 'ExecutablePath' ) && $imageINI->variable( 'ImageMagick', 'ExecutablePath' ) )
                 $executable = $imageINI->variable( 'ImageMagick', 'ExecutablePath' ) . eZSys::fileSeparator() . $executable;
             // @todo Remove if ezc indeed do it automatically
             // if ( eZSys::osType() == 'win32' )
@@ -115,6 +115,9 @@ class eZIEezcImageConverter
 
         // @todo Check if the local output file can be deleted at that stage. Theorically yes.
         $outClusterHandler->fileStore( $dst, true );
+        
+        // fixing the file permissions
+        eZImageHandler::changeFilePermissions( $dst );
     }
 
     /**
