@@ -2,12 +2,6 @@
     "name": "heliopsis/ezie",
     "version": "1.1.0",
     "type": "ezpublish-legacy-extension",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:Heliopsis-HQ/ezpublish-legacy-installer.git"
-        }  
-    ],
     "require": {
         "ezsystems/ezpublish-legacy": ">=5.1@dev",
         "ezsystems/ezpublish-legacy-installer": "@dev"
